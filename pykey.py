@@ -10,14 +10,27 @@ root = None
 
 window_name = 'Medivia Online'
 key_codes = {
-    26: 111, # e
-    39: 113, # s
-    40: 116, # d
-    41: 114, # f
-    25: 79,  # w
-    27: 81,  # r
-    53: 87,  # x
-    55: 89   # v
+    26: 111, # e: up
+    39: 113, # s: left
+    40: 116, # d: down
+    41: 114, # f: right
+    25: 79,  # w: HOME
+    27: 81,  # r: PG_UP
+    53: 87,  # x: END
+    55: 89,  # v: PD_DN
+    # F keys
+    10: 67, # 1: F1
+    11: 68, # 2: F2
+    12: 69, # 3: F3
+    13: 70, # 4: F4
+    14: 71, # 5: F5
+    15: 72, # 6: F6
+    24: 73, # q: F7
+    38: 74, # a: F8
+    52: 75, # z: F9
+    28: 76, # t: F10
+    42: 95, # g: F11
+    56: 96  # b: F12
 }
 ctrl_codes = [26,39,40,41]
 KEY_SWITCHER = 36 # key for switching on-off the key remaping
