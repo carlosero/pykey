@@ -9,6 +9,7 @@ display = None
 root = None
 
 window_name = 'Medivia Online'
+window_name = 'Tibia'
 key_codes = {
     26: 111, # e: up
     39: 113, # s: left
@@ -39,7 +40,7 @@ detection_enabled = True
 def handle_event(event):
     global detection_enabled
     window = display.get_input_focus().focus
-    if window.get_wm_name() == window_name:
+    if window_name in window.get_wm_name():
         if event.type == X.KeyRelease and event.state == 4 and event.detail == KEY_SWITCHER:
             detection_enabled = not detection_enabled
         if event.detail in ctrl_codes and detection_enabled and event.state == 4:
@@ -59,7 +60,6 @@ def handle_keys(event, keycode, state = 0):
     if (event.type == X.KeyRelease):
         send_release_key(keycode, state)
 
-# from http://shallowsky.com/software/crikey/pykey-0.1
 def send_press_key(keycode, state = 0):
     window = display.get_input_focus()._data["focus"]
     event = Xlib.protocol.event.KeyPress(
@@ -102,8 +102,8 @@ def main():
         root.grab_key(key_code, 4, True,X.GrabModeSync, X.GrabModeSync)
     # Switcher key
     root.grab_key(KEY_SWITCHER, 4, True,X.GrabModeSync, X.GrabModeSync)
-    signal.signal(signal.SIGALRM, lambda a,b:sys.exit(1))
-    signal.alarm(30)
+    # signal.signal(signal.SIGALRM, lambda a,b:sys.exit(1))
+    # signal.alarm(30)
     while 1:
         event = display.next_event()
         handle_event(event)
