@@ -1,3 +1,6 @@
+# Author: Carlos Rodriguez
+# Github: cerodriguez
+
 from Xlib.display import Display
 import Xlib
 from Xlib import X
@@ -8,9 +11,9 @@ import time
 display = None
 root = None
 
-window_name = 'Medivia Online'
+# window_name = 'Medivia Online'
 window_name = 'Tibia'
-key_codes = {
+dir_key_codes = {
     26: 111, # e: up
     39: 113, # s: left
     40: 116, # d: down
@@ -19,7 +22,8 @@ key_codes = {
     27: 81,  # r: PG_UP
     53: 87,  # x: END
     55: 89,  # v: PD_DN
-    # F keys
+}
+f_keys = {
     10: 67, # 1: F1
     11: 68, # 2: F2
     12: 69, # 3: F3
@@ -33,6 +37,8 @@ key_codes = {
     42: 95, # g: F11
     56: 96  # b: F12
 }
+key_codes = {**dir_key_codes, **f_keys}
+
 ctrl_codes = [26,39,40,41]
 KEY_SWITCHER = 36 # key for switching on-off the key remaping
 detection_enabled = True
@@ -40,8 +46,8 @@ detection_enabled = True
 def handle_event(event):
     global detection_enabled
     window = display.get_input_focus().focus
-    if window_name in window.get_wm_name():
-        if event.type == X.KeyRelease and event.state == 4 and event.detail == KEY_SWITCHER:
+    if window.get_wm_name() is not None and (window_name in window.get_wm_name()):
+        if event.type == X.KeyPress and event.state == 4 and event.detail == KEY_SWITCHER:
             detection_enabled = not detection_enabled
         if event.detail in ctrl_codes and detection_enabled and event.state == 4:
             send_press_key(key_codes[event.detail], event.state)
@@ -97,7 +103,13 @@ def main():
     # Common keys without state
     for key_code in key_codes.keys():
         root.grab_key(key_code, 0, True,X.GrabModeSync, X.GrabModeSync)
-    # Keys with shift
+    # F Keys with shift
+    for key_code in f_keys.keys():
+        root.grab_key(key_code, 1, True,X.GrabModeSync, X.GrabModeSync)
+    # F Keys with ctrl
+    for key_code in f_keys.keys():
+        root.grab_key(key_code, 4, True,X.GrabModeSync, X.GrabModeSync)
+    # Keys with ctrl
     for key_code in ctrl_codes:
         root.grab_key(key_code, 4, True,X.GrabModeSync, X.GrabModeSync)
     # Switcher key
